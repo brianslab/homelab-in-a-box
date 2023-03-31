@@ -30,3 +30,6 @@ variable "private_cidrs" {
   type = list(string)
 }
 
+variable "make_db_subnet_group" {
+  type = bool
+}

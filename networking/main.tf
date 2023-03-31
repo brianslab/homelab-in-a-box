@@ -108,3 +108,13 @@ resource "aws_security_group" "hiab_sec_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_db_subnet_group" "hiab_rds_subnet_group" {
+  count      = var.make_db_subnet_group ? 1 : 0
+  name       = "hiab_rds_subnet_group"
+  subnet_ids = aws_subnet.hiab_private_subnet.*.id
+
+  tags = {
+    Name = "hiab_rds_subnet_group"
+  }
+}

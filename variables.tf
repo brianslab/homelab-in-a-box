@@ -4,10 +4,22 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
+# Networking variables
 variable "access_ip" {
   type = string
 }
 
-variable "db_password" {
+# DB variables
+variable "db_name" {
   type = string
+}
+
+variable "db_user" {
+  type      = string
+  sensitive = true
+}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
 }

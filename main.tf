@@ -41,3 +41,12 @@ module "loadbalancing" {
   listener_port          = 8000
   listener_protocol      = "HTTP"
 }
+
+module "compute" {
+  source                = "./compute"
+  instance_count        = 1
+  instance_type         = "t3.micro"
+  public_security_group = module.networking.public_security_group
+  public_subnets        = module.networking.public_subnets
+  vol_size              = 10
+}

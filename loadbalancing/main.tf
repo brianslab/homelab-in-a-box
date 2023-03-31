@@ -18,6 +18,10 @@ resource "aws_lb_target_group" "hiab_target_group" {
     timeout             = var.lb_timeout
     interval            = var.lb_interval
   }
+  lifecycle {
+    ignore_changes        = [name]
+    create_before_destroy = true
+  }
 }
 
 resource "aws_lb_listener" "hiab_lb_listener" {

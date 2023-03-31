@@ -13,16 +13,22 @@ module "networking" {
   make_db_subnet_group = true
 }
 
-module "database" {
-  source                 = "./database"
-  db_storage             = 20
-  db_engine_version      = "5.7.41"
-  db_instance_class      = "db.t2.micro"
-  db_name                = var.db_name
-  db_user                = var.db_user
-  db_password            = var.db_password
-  db_subnet_group_name   = module.networking.db_subnet_group_name[0]
-  vpc_security_group_ids = module.networking.db_security_group
-  db_identifier          = "hiab-db"
-  skip_db_snapshot       = true
+# module "database" {
+#   source                 = "./database"
+#   db_storage             = 20
+#   db_engine_version      = "5.7.41"
+#   db_instance_class      = "db.t2.micro"
+#   db_name                = var.db_name
+#   db_user                = var.db_user
+#   db_password            = var.db_password
+#   db_subnet_group_name   = module.networking.db_subnet_group_name[0]
+#   vpc_security_group_ids = module.networking.db_security_group
+#   db_identifier          = "hiab-db"
+#   skip_db_snapshot       = true
+# }
+
+module "loadbalancing" {
+  source                = "./loadbalancing"
+  public_subnets        = module.networking.public_subnets
+  public_security_group = module.networking.public_security_group
 }

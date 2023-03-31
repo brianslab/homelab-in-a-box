@@ -12,6 +12,10 @@ variable "private_subnet_count" {
   type = number
 }
 
+variable "max_subnets" {
+  type = number
+}
+
 variable "public_cidrs" {
   type = list(string)
 }

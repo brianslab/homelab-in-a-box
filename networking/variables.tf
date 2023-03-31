@@ -1,8 +1,14 @@
 # --- networking/variables.tf --- #
 
+variable "access_ip" {
+  type = string
+}
+
 variable "vpc_cidr" {
   type = string
 }
+
+variable "security_groups" {}
 
 variable "public_subnet_count" {
   type = number
@@ -24,6 +30,3 @@ variable "private_cidrs" {
   type = list(string)
 }
 
-variable "access_ip" {
-  type = string
-}

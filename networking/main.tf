@@ -17,6 +17,10 @@ resource "aws_vpc" "hiab_vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Name = "hiab_vpc-${random_integer.random.id}"
   }

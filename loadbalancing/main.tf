@@ -19,3 +19,13 @@ resource "aws_lb_target_group" "hiab_target_group" {
     interval            = var.lb_interval
   }
 }
+
+resource "aws_lb_listener" "hiab_lb_listener" {
+  load_balancer_arn = aws_lb.hiab_loadbalancer.arn
+  port              = var.listener_port
+  protocol          = var.listener_protocol
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.hiab_target_group.arn
+  }
+}

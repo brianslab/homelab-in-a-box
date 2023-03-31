@@ -34,6 +34,12 @@ resource "aws_subnet" "hiab_public_subnet" {
   }
 }
 
+resource "aws_route_table_association" "hiab_public_assoc" {
+  count          = var.public_subnet_count
+  subnet_id      = aws_subnet.hiab_public_subnet.*.id[count.index]
+  route_table_id = aws_route_table.hiab_public_route_table.id
+}
+
 resource "aws_subnet" "hiab_private_subnet" {
   count                   = var.private_subnet_count
   vpc_id                  = aws_vpc.hiab_vpc.id
@@ -43,5 +49,35 @@ resource "aws_subnet" "hiab_private_subnet" {
 
   tags = {
     Name = "hiab_private_${count.index + 1}"
+  }
+}
+
+resource "aws_internet_gateway" "hiab_internet_gateway" {
+  vpc_id = aws_vpc.hiab_vpc.id
+
+  tags = {
+    Name = "hiab_gateway"
+  }
+}
+
+resource "aws_route_table" "hiab_public_route_table" {
+  vpc_id = aws_vpc.hiab_vpc.id
+
+  tags = {
+    Name = "hiab_public"
+  }
+}
+
+resource "aws_route" "default_route" {
+  route_table_id         = aws_route_table.hiab_public_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.hiab_internet_gateway.id
+}
+
+resource "aws_default_route_table" "hiab_private_route_table" {
+  default_route_table_id = aws_vpc.hiab_vpc.default_route_table_id
+
+  tags = {
+    Name = "hiab_private"
   }
 }

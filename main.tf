@@ -49,4 +49,6 @@ module "compute" {
   public_security_group = module.networking.public_security_group
   public_subnets        = module.networking.public_subnets
   vol_size              = 10
+  key_name              = "hiab_artemis"
+  public_key_path       = "/home/brian/.ssh/hiab_artemis.pub"
 }

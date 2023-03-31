@@ -85,3 +85,22 @@ resource "aws_default_route_table" "hiab_private_route_table" {
     Name = "hiab_private"
   }
 }
+
+resource "aws_security_group" "hiab_sec_group" {
+  name        = "public_security_group"
+  description = "Security Group for Public Access"
+  vpc_id      = aws_vpc.hiab_vpc.id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.access_ip]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

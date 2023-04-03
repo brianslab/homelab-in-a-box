@@ -13,14 +13,14 @@ data "aws_ami" "server_ami" {
 resource "random_id" "hiab_node_id" {
   byte_length = 2
   count       = var.instance_count
+  keepers = {
+    key_name = var.key_name
+  }
 }
 
 resource "aws_key_pair" "hiab_auth" {
   key_name   = var.key_name
   public_key = file(var.public_key_path)
-  keepers = {
-    key_name = var.key_name
-  }
 }
 
 resource "aws_instance" "hiab_node" {
@@ -30,12 +30,21 @@ resource "aws_instance" "hiab_node" {
   key_name               = aws_key_pair.hiab_auth.id
   vpc_security_group_ids = [var.public_security_group]
   subnet_id              = var.public_subnets[count.index]
-  # user_data = 
+  user_data = templatefile(var.user_data_path,
+    {
+      nodename      = "hiab-node-${random_id.hiab_node_id[count.index].dec}"
+      db_endpoint   = var.db_endpoint
+      db_name       = var.db_name
+      db_user       = var.db_user
+      db_password   = var.db_password
+      rancher_token = var.rancher_token
+    }
+  )
   root_block_device {
     volume_size = var.vol_size
   }
 
   tags = {
-    Name = "hiab_node-${random_id.hiab_node_id[count.index].dec}"
+    Name = "hiab-node-${random_id.hiab_node_id[count.index].dec}"
   }
 }

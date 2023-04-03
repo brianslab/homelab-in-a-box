@@ -23,3 +23,9 @@ variable "db_password" {
   type      = string
   sensitive = true
 }
+
+# Compute variables
+variable "rancher_token" {
+  type      = string
+  sensitive = true
+}

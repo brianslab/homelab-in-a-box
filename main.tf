@@ -51,4 +51,10 @@ module "compute" {
   vol_size              = 10
   key_name              = "hiab_artemis"
   public_key_path       = "/home/brian/.ssh/hiab_artemis.pub"
+  user_data_path        = "${path.root}/userdata.tpl"
+  db_name               = var.db_name
+  db_user               = var.db_user
+  db_password           = var.db_password
+  db_endpoint           = module.database.db_endpoint
+  rancher_token         = var.rancher_token
 }

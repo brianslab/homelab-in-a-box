@@ -1,9 +1,15 @@
 # --- compute/variables.tf --- #
 
-variable "key_name" {}
-variable "public_key_path" {}
 variable "instance_count" {}
 variable "instance_type" {}
 variable "public_security_group" {}
 variable "public_subnets" {}
 variable "vol_size" {}
+variable "key_name" {}
+variable "public_key_path" {}
+variable "user_data_path" {}
+variable "db_name" {}
+variable "db_user" {}
+variable "db_password" {}
+variable "db_endpoint" {}
+variable "rancher_token" {}

@@ -18,6 +18,9 @@ resource "random_id" "hiab_node_id" {
 resource "aws_key_pair" "hiab_auth" {
   key_name   = var.key_name
   public_key = file(var.public_key_path)
+  keepers = {
+    key_name = var.key_name
+  }
 }
 
 resource "aws_instance" "hiab_node" {

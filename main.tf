@@ -31,7 +31,7 @@ module "loadbalancing" {
   source                 = "./loadbalancing"
   public_subnets         = module.networking.public_subnets
   public_security_group  = module.networking.public_security_group
-  target_group_port      = 80
+  target_group_port      = 8000
   target_group_protocol  = "HTTP"
   vpc_id                 = module.networking.vpc_id
   lb_healthy_threshold   = 2
@@ -57,4 +57,5 @@ module "compute" {
   db_password           = var.db_password
   db_endpoint           = module.database.db_endpoint
   rancher_token         = var.rancher_token
+  lb_target_group_arn   = module.loadbalancing.lb_target_group_arn
 }

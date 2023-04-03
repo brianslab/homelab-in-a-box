@@ -48,3 +48,10 @@ resource "aws_instance" "hiab_node" {
     Name = "hiab-node-${random_id.hiab_node_id[count.index].dec}"
   }
 }
+
+resource "aws_lb_target_group_attachment" "hiab_target_group_attachment" {
+  count            = var.instance_count
+  target_group_arn = var.lb_target_group_arn
+  target_id        = aws_instance.hiab_node[count.index].id
+  port             = 8000
+}

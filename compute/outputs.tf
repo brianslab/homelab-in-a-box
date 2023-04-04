@@ -1,7 +1,8 @@
 # --- compute/outputs.tf --- #
 
 output "instance" {
-  value = aws_instance.hiab_node[*]
+  value     = aws_instance.hiab_node[*]
+  sensitive = true
 }
 
 output "instance_port" {

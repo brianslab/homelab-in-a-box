@@ -14,3 +14,4 @@ variable "db_password" {}
 variable "db_endpoint" {}
 variable "rancher_token" {}
 variable "lb_target_group_arn" {}
+variable "target_group_port" {}

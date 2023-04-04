@@ -58,4 +58,5 @@ module "compute" {
   db_endpoint           = module.database.db_endpoint
   rancher_token         = var.rancher_token
   lb_target_group_arn   = module.loadbalancing.lb_target_group_arn
+  target_group_port     = 8000
 }

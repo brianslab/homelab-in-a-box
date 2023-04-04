@@ -53,5 +53,5 @@ resource "aws_lb_target_group_attachment" "hiab_target_group_attachment" {
   count            = var.instance_count
   target_group_arn = var.lb_target_group_arn
   target_id        = aws_instance.hiab_node[count.index].id
-  port             = 8000
+  port             = var.target_group_port
 }

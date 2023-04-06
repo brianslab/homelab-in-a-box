@@ -44,14 +44,14 @@ module "loadbalancing" {
 
 module "compute" {
   source                = "./compute"
-  instance_count        = 2
+  instance_count        = 5
   instance_type         = "t3.micro"
   public_security_group = module.networking.public_security_group
-  public_subnets        = module.networking.public_subnets
+  public_subnet         = module.networking.public_subnets[1]
   vol_size              = 10
   key_name              = "hiab_artemis"
   public_key_path       = "/home/brian/.ssh/hiab_artemis.pub"
-  user_data_path        = "${path.root}/userdata.tpl"
+  user_data_path        = "${path.root}/userdata_k3s.tpl"
   db_name               = var.db_name
   db_user               = var.db_user
   db_password           = var.db_password

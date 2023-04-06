@@ -29,7 +29,7 @@ resource "aws_instance" "hiab_node" {
   ami                    = data.aws_ami.server_ami.id
   key_name               = aws_key_pair.hiab_auth.id
   vpc_security_group_ids = [var.public_security_group]
-  subnet_id              = var.public_subnets[count.index]
+  subnet_id              = var.public_subnet
   user_data = templatefile(var.user_data_path,
     {
       nodename      = "hiab-node-${random_id.hiab_node_id[count.index].dec}"

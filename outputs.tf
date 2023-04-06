@@ -4,7 +4,12 @@ output "loadbalancer_endpoint" {
   value = module.loadbalancing.lb_endpoint
 }
 
+output "ansible_control_node" {
+  value = module.ansible_control_node.instance.public_ip
+  sensitive = true
+}
+
 output "instances" {
-  value     = { for i in module.compute.instance : i.tags.Name => "${i.public_ip}:${module.compute.instance_port}" }
+  value     = { for i in module.compute.instance : i.tags.Name => i.public_ip }
   sensitive = true
 }

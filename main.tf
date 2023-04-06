@@ -55,15 +55,14 @@ module "compute" {
   public_subnet         = module.networking.public_subnets[1]
   vol_size              = 10
   key_name              = aws_key_pair.hiab_auth.id
-  # public_key_path       = "/home/brian/.ssh/hiab_artemis.pub"
-  user_data_path      = "${path.root}/userdata_k3s.tpl"
-  db_name             = var.db_name
-  db_user             = var.db_user
-  db_password         = var.db_password
-  db_endpoint         = module.database.db_endpoint
-  rancher_token       = var.rancher_token
-  lb_target_group_arn = module.loadbalancing.lb_target_group_arn
-  target_group_port   = 8000
+  user_data_path        = "${path.root}/userdata_k3s.tpl"
+  db_name               = var.db_name
+  db_user               = var.db_user
+  db_password           = var.db_password
+  db_endpoint           = module.database.db_endpoint
+  rancher_token         = var.rancher_token
+  lb_target_group_arn   = module.loadbalancing.lb_target_group_arn
+  target_group_port     = 8000
 }
 
 module "ansible_control_node" {
@@ -73,13 +72,5 @@ module "ansible_control_node" {
   public_subnet         = module.networking.public_subnets[0]
   vol_size              = 30
   key_name              = aws_key_pair.hiab_auth.id
-  # public_key_path       = "/home/brian/.ssh/hiab_artemis.pub"
-  user_data_path = "${path.root}/userdata_acn.tpl"
-  # db_name               = var.db_name
-  # db_user               = var.db_user
-  # db_password           = var.db_password
-  # db_endpoint           = module.database.db_endpoint
-  # rancher_token         = var.rancher_token
-  # lb_target_group_arn   = module.loadbalancing.lb_target_group_arn
-  # target_group_port     = 8000
+  user_data_path        = "${path.root}/userdata_acn.tpl"
 }

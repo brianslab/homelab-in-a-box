@@ -1,9 +1,5 @@
 terraform {
-  cloud {
-    organization = "brianslab"
-
-    workspaces {
-      name = "HIAB-dev"
-    }
+  backend "local" {
+    path = "./terraform.tfstate"
   }
 }

@@ -18,16 +18,11 @@ resource "random_id" "hiab_node_id" {
   }
 }
 
-resource "aws_key_pair" "hiab_auth" {
-  key_name   = var.key_name
-  public_key = file(var.public_key_path)
-}
-
 resource "aws_instance" "hiab_node" {
   count                  = var.instance_count
   instance_type          = var.instance_type
   ami                    = data.aws_ami.server_ami.id
-  key_name               = aws_key_pair.hiab_auth.id
+  key_name               = var.key_name
   vpc_security_group_ids = [var.public_security_group]
   subnet_id              = var.public_subnet
   user_data = templatefile(var.user_data_path,

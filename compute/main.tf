@@ -27,12 +27,7 @@ resource "aws_instance" "hiab_node" {
   subnet_id              = var.public_subnet
   user_data = templatefile(var.user_data_path,
     {
-      nodename      = "hiab-node-${random_id.hiab_node_id[count.index].dec}"
-      db_endpoint   = var.db_endpoint
-      db_name       = var.db_name
-      db_user       = var.db_user
-      db_password   = var.db_password
-      rancher_token = var.rancher_token
+      nodename = "hiab-node-${random_id.hiab_node_id[count.index].dec}"
     }
   )
   root_block_device {

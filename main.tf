@@ -13,20 +13,6 @@ module "networking" {
   make_db_subnet_group = true
 }
 
-module "database" {
-  source                 = "./database"
-  db_storage             = 20
-  db_engine_version      = "5.7.41"
-  db_instance_class      = "db.t2.micro"
-  db_name                = var.db_name
-  db_user                = var.db_user
-  db_password            = var.db_password
-  db_subnet_group_name   = module.networking.db_subnet_group_name[0]
-  vpc_security_group_ids = module.networking.db_security_group
-  db_identifier          = "hiab-db"
-  skip_db_snapshot       = true
-}
-
 module "loadbalancing" {
   source                 = "./loadbalancing"
   public_subnets         = module.networking.public_subnets
@@ -56,11 +42,6 @@ module "compute" {
   vol_size              = 10
   key_name              = aws_key_pair.hiab_auth.id
   user_data_path        = "${path.root}/userdata_k3s.tpl"
-  db_name               = var.db_name
-  db_user               = var.db_user
-  db_password           = var.db_password
-  db_endpoint           = module.database.db_endpoint
-  rancher_token         = var.rancher_token
   lb_target_group_arn   = module.loadbalancing.lb_target_group_arn
   target_group_port     = 8000
 }

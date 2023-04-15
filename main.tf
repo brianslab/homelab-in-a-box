@@ -44,7 +44,7 @@ module "loadbalancing" {
 
 resource "aws_key_pair" "hiab_auth" {
   key_name   = "hiab_artemis"
-  public_key = file("/home/brian/.ssh/hiab_artemis.pub")
+  public_key = file("/home/brian/.ssh/hiab.pub")
 }
 
 module "compute" {
